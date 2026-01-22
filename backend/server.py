@@ -78,6 +78,9 @@ class Booking(BaseModel):
     property_address: str
     notes: Optional[str] = ""
     estimated_price: int
+    final_price: Optional[int] = None
+    discount_applied: int = 0
+    coupon_code: Optional[str] = None
     status: str = "pending"
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
