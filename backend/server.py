@@ -378,6 +378,112 @@ async def submit_contact_form(form: ContactForm):
     
     return {"message": "Děkujeme za zprávu! Brzy se vám ozveme.", "id": doc["id"]}
 
+@api_router.post("/subscribe")
+async def subscribe_email(data: EmailSubscription):
+    """Subscribe to newsletter and get 5% discount coupon"""
+    # Check if already subscribed
+    existing = await db.subscribers.find_one({"email": data.email}, {"_id": 0})
+    if existing:
+        return {
+            "message": "Tento email je již přihlášen",
+            "coupon_code": existing.get("coupon_code", "SEKNU5OFF")
+        }
+    
+    # Generate unique coupon
+    coupon_code = generate_coupon_code()
+    
+    doc = {
+        "id": str(uuid.uuid4()),
+        "email": data.email,
+        "coupon_code": coupon_code,
+        "discount_percent": 5,
+        "used": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.subscribers.insert_one(doc)
+    await db.coupons.insert_one({
+        "code": coupon_code,
+        "discount_percent": 5,
+        "email": data.email,
+        "used": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    logger.info(f"New subscriber: {data.email}, coupon: {coupon_code}")
+    
+    # Send coupon email
+    if resend and RESEND_API_KEY:
+        try:
+            params = {
+                "from": SENDER_EMAIL,
+                "to": [data.email],
+                "subject": "🎁 Váš slevový kupón 5% - SeknuTo.cz",
+                "html": f"""
+                <!DOCTYPE html>
+                <html>
+                <head><meta charset="UTF-8"></head>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <div style="background: linear-gradient(135deg, #3FA34D, #2d7a38); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
+                        <h1 style="color: white; margin: 0; font-size: 28px;">🎁 Děkujeme za přihlášení!</h1>
+                    </div>
+                    
+                    <div style="background: #f8fff9; padding: 40px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 16px 16px;">
+                        <p style="text-align: center; font-size: 16px; color: #4B5563;">
+                            Jako poděkování za přihlášení k odběru novinek máte nárok na slevu <strong>5%</strong> na vaši první objednávku!
+                        </p>
+                        
+                        <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; margin: 30px 0; border: 2px dashed #3FA34D;">
+                            <p style="color: #9CA3AF; margin: 0 0 10px;">Váš slevový kód:</p>
+                            <p style="font-size: 36px; font-weight: bold; color: #3FA34D; margin: 0; letter-spacing: 3px;">
+                                {coupon_code}
+                            </p>
+                        </div>
+                        
+                        <p style="text-align: center; color: #4B5563;">
+                            Zadejte tento kód při objednávce a získejte slevu 5%.
+                        </p>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <a href="https://seknuto.cz/rezervace" style="display: inline-block; background: #3FA34D; color: white; padding: 16px 32px; border-radius: 50px; text-decoration: none; font-weight: bold;">
+                                Objednat se slevou
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p style="text-align: center; color: #9CA3AF; font-size: 12px; margin-top: 20px;">
+                        SeknuTo.cz | Trávník bez starostí!
+                    </p>
+                </body>
+                </html>
+                """
+            }
+            await asyncio.to_thread(resend.Emails.send, params)
+            logger.info(f"Coupon email sent to {data.email}")
+        except Exception as e:
+            logger.error(f"Failed to send coupon email: {str(e)}")
+    
+    return {
+        "message": "Úspěšně přihlášeno! Slevový kupón byl odeslán na váš email.",
+        "coupon_code": coupon_code
+    }
+
+@api_router.post("/coupons/validate")
+async def validate_coupon(data: CouponValidation):
+    """Validate a coupon code"""
+    coupon = await db.coupons.find_one({"code": data.code.upper()}, {"_id": 0})
+    
+    if not coupon:
+        raise HTTPException(status_code=404, detail="Neplatný slevový kód")
+    
+    if coupon.get("used"):
+        raise HTTPException(status_code=400, detail="Tento kupón již byl použit")
+    
+    return {
+        "valid": True,
+        "discount_percent": coupon.get("discount_percent", 5),
+        "message": f"Kupón platný! Sleva {coupon.get('discount_percent', 5)}%"
+    }
+
 # Include the router in the main app
 app.include_router(api_router)
 
