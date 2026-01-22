@@ -61,6 +61,7 @@ class BookingCreate(BaseModel):
     notes: Optional[str] = ""
     estimated_price: int
     gdpr_consent: bool = True
+    coupon_code: Optional[str] = None
 
 class Booking(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
