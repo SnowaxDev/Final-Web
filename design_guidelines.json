@@ -1,0 +1,151 @@
+{
+  "project_name": "SeknuTo.cz",
+  "design_philosophy": {
+    "identity": "E1 - The Anti-AI Designer",
+    "core_principles": [
+      "Fusion over Imitation: Mix organic nature vibes with precision tech efficiency.",
+      "Emotion First: Trust, Freshness, and Relief (from chores).",
+      "Content is King: Every section must sell the 'worry-free lawn' promise.",
+      "Zoom In: Use high-res textures of grass and tools to create tactile feelings.",
+      "Negative Space: Generous padding to reflect the openness of a well-kept garden."
+    ],
+    "anti_patterns": [
+      "No generic 'SaaS Blue' - use Brand Green.",
+      "No 'Inter' for headings - use Poppins.",
+      "No center-everything layouts - use asymmetry.",
+      "No full-screen gradients - use texture and white space."
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Poppins, sans-serif",
+      "body": "Montserrat, sans-serif"
+    },
+    "weights": {
+      "headings": ["600", "700"],
+      "body": ["400", "500"]
+    },
+    "usage_rules": [
+      "Headings (H1-H3) must use 'tracking-tight' for a modern, compact look.",
+      "Overlines/Labels must be uppercase, small text-xs, and 'tracking-widest'.",
+      "Body text should have 'leading-relaxed' for readability.",
+      "Do not use bold for everything; use font weight contrast (e.g., Bold Heading + Light Body)."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#3FA34D",
+        "hover": "#358a41",
+        "foreground": "#FFFFFF"
+      },
+      "secondary": {
+        "DEFAULT": "#2d7a38",
+        "foreground": "#FFFFFF"
+      },
+      "background": {
+        "DEFAULT": "#FFFFFF",
+        "alt": "#F9FAFB",
+        "dark": "#222222"
+      },
+      "text": {
+        "primary": "#222222",
+        "secondary": "#4B5563",
+        "muted": "#9CA3AF"
+      },
+      "accent": {
+        "DEFAULT": "#F0FDF4",
+        "foreground": "#166534"
+      },
+      "border": "#E5E7EB"
+    },
+    "rules": [
+      "Use Primary Green (#3FA34D) for main CTAs and key highlights.",
+      "Use Dark Green (#2d7a38) for text links and hover states.",
+      "Backgrounds should be mostly White (#FFFFFF) or very light Gray (#F9FAFB).",
+      "Avoid pure black; use #222222 for high contrast text.",
+      "Use 'accent' (light green bg) for active states in booking forms or selected cards."
+    ]
+  },
+  "layout": {
+    "spacing_system": {
+      "base": "Use Tailwind spacing scale.",
+      "philosophy": "Generous spacing. Use p-8, p-12, p-16 for section padding.",
+      "container_padding": "px-4 md:px-8 lg:px-12"
+    },
+    "grid_system": {
+      "marketing": "Use 'Bento' grid (asymmetric) for services and features.",
+      "dashboard": "Use dense grid for the booking summary.",
+      "rules": [
+        "Mobile-first: Start with grid-cols-1.",
+        "Tablet: grid-cols-2.",
+        "Desktop: grid-cols-3 or grid-cols-12 for complex layouts.",
+        "Gap: Use gap-6 or gap-8 to let content breathe."
+      ]
+    },
+    "container_width": "max-w-7xl mx-auto"
+  },
+  "components": {
+    "buttons": {
+      "style": "Rounded-full or slightly rounded-lg (rounded-md).",
+      "variants": {
+        "primary": "bg-[#3FA34D] text-white hover:bg-[#2d7a38] shadow-lg hover:shadow-xl transition-all duration-300",
+        "secondary": "bg-white text-[#2d7a38] border-2 border-[#2d7a38] hover:bg-[#F0FDF4]",
+        "ghost": "text-[#4B5563] hover:text-[#3FA34D] hover:bg-[#F0FDF4]"
+      }
+    },
+    "cards": {
+      "style": "bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300",
+      "features": "Use 'group' hover effects to animate icons or text color."
+    },
+    "inputs": {
+      "style": "h-12 rounded-md border-gray-200 focus:border-[#3FA34D] focus:ring-[#3FA34D] bg-white"
+    },
+    "booking_wizard": {
+      "style": "Multi-step form with progress bar.",
+      "step_indicator": "Flex row with numbered circles. Active step: Green bg, White text. Inactive: Gray bg.",
+      "navigation": "Fixed bottom bar on mobile, inline buttons on desktop."
+    }
+  },
+  "visual_enhancers": {
+    "shadows": "Use soft, diffuse shadows (shadow-lg, shadow-xl) for floating elements like the booking card.",
+    "borders": "Subtle 1px borders (border-gray-100) to define structure without heaviness.",
+    "radius": "rounded-xl or rounded-2xl for containers to feel friendly and organic.",
+    "textures": "Use subtle noise or grain overlay on solid green backgrounds to add depth.",
+    "glassmorphism": "Use backdrop-blur-md bg-white/80 for sticky headers or floating booking summaries."
+  },
+  "media": {
+    "image_style": "Natural, bright, high-contrast. Avoid overly staged stock photos. Focus on green lawns, happy people, and professional equipment.",
+    "icons": "Use 'lucide-react'. Stroke width: 1.5px or 2px. Color: Primary Green or Dark Gray.",
+    "image_urls": {
+      "hero_bg": "https://images.unsplash.com/photo-1589321084815-4e5f1740cbc6?q=85&w=2070&auto=format&fit=crop",
+      "texture_grass": "https://images.unsplash.com/photo-1769101834051-917f2ce253ec?q=85&w=2070&auto=format&fit=crop",
+      "family_fun": "https://images.pexels.com/photos/8730072/pexels-photo-8730072.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "gardener_pro": "https://images.pexels.com/photos/6728919/pexels-photo-6728919.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "lawn_mower": "https://images.unsplash.com/photo-1458530970867-aaa3700e966d?q=85&w=2070&auto=format&fit=crop"
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure text contrast ratio is at least 4.5:1. Use Dark Gray (#222222) on White.",
+    "focus_states": "Visible focus rings (ring-2 ring-offset-2 ring-[#3FA34D]) for keyboard navigation.",
+    "aria_labels": "All icon-only buttons must have aria-label.",
+    "testing": "All interactive elements must have 'data-testid' attribute."
+  },
+  "instructions_to_main_agent": [
+    "1. Install 'lucide-react' and 'sonner' if not present.",
+    "2. Configure Tailwind theme with the specified colors and fonts.",
+    "3. Create the 'BookingWizard' component as a priority feature.",
+    "4. Use the provided image URLs for the respective sections.",
+    "5. Ensure the site is fully responsive (mobile-first).",
+    "6. Implement the 'Bento' grid for the Services section.",
+    "7. Use 'framer-motion' for subtle entrance animations (fade-up) if available, otherwise standard CSS transitions.",
+    "8. Do NOT use generic placeholder text; use the provided slogan and context."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI slop' aesthetic (generic centered layouts).",
+    "Create depth with z-index and shadows.",
+    "Micro-animations for all interactions.",
+    "Use 2-3x more spacing than usual.",
+    "No 'transparent' backgrounds on overlays without blur."
+  ]
+}
