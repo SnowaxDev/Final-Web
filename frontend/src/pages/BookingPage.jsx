@@ -4,7 +4,7 @@ import axios from 'axios';
 import { 
   ChevronLeft, ChevronRight, Check, Calendar as CalendarIcon,
   Scissors, Sprout, Leaf, TreeDeciduous, Package, HelpCircle,
-  User, Phone, Mail, MapPin, FileText, Loader2
+  User, Phone, Mail, MapPin, FileText, Loader2, Tag, CheckCircle, XCircle
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -32,6 +32,10 @@ const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingId, setBookingId] = useState(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponValid, setCouponValid] = useState(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
   
   const [formData, setFormData] = useState({
     service: '',
@@ -48,12 +52,19 @@ const BookingPage = () => {
     notes: '',
     estimated_price: 0,
     gdpr_consent: false,
+    coupon_code: '',
   });
 
   const [availableDates, setAvailableDates] = useState([]);
 
   useEffect(() => {
     fetchAvailability();
+    // Check for saved coupon
+    const savedCoupon = localStorage.getItem('seknuto_coupon');
+    if (savedCoupon) {
+      setCouponCode(savedCoupon);
+      validateCoupon(savedCoupon);
+    }
   }, []);
 
   useEffect(() => {
