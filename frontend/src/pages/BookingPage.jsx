@@ -96,6 +96,36 @@ const BookingPage = () => {
     }
   };
 
+  const validateCoupon = async (code) => {
+    if (!code) {
+      setCouponValid(null);
+      setCouponDiscount(0);
+      return;
+    }
+    
+    setIsValidatingCoupon(true);
+    try {
+      const response = await axios.post(`${API}/coupons/validate`, { code: code.toUpperCase() });
+      setCouponValid(true);
+      setCouponDiscount(response.data.discount_percent);
+      setFormData(prev => ({ ...prev, coupon_code: code.toUpperCase() }));
+      toast.success(`Kupón platný! Sleva ${response.data.discount_percent}%`);
+    } catch (error) {
+      setCouponValid(false);
+      setCouponDiscount(0);
+      setFormData(prev => ({ ...prev, coupon_code: '' }));
+    } finally {
+      setIsValidatingCoupon(false);
+    }
+  };
+
+  const getFinalPrice = () => {
+    if (couponDiscount > 0 && formData.estimated_price > 0) {
+      return Math.round(formData.estimated_price * (1 - couponDiscount / 100));
+    }
+    return formData.estimated_price;
+  };
+
   const services = [
     { id: 'lawn_mowing', icon: Scissors, title: 'Běžné sekání', price: '15 Kč/m²' },
     { id: 'lawn_with_fertilizer', icon: Sprout, title: 'Sekání s hnojením', price: '20 Kč/m²' },
