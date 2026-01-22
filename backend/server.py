@@ -92,6 +92,22 @@ class ContactForm(BaseModel):
     phone: Optional[str] = ""
     message: str
 
+class EmailSubscription(BaseModel):
+    email: EmailStr
+
+class CouponValidation(BaseModel):
+    code: str
+
+# ============== COUPON CONFIG ==============
+
+VALID_COUPONS = {}  # Will be populated dynamically
+
+def generate_coupon_code():
+    """Generate a unique coupon code"""
+    import random
+    import string
+    return 'SEKNU' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+
 # ============== PRICING CONFIG ==============
 
 SERVICE_PRICES = {
