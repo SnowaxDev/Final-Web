@@ -619,6 +619,48 @@ const BookingPage = () => {
                     </div>
                   </div>
 
+                  {/* Coupon Code */}
+                  <div className="pt-4 border-t border-gray-100">
+                    <Label htmlFor="coupon_code" className="text-sm font-medium text-[#222222]">
+                      Slevový kupón (volitelné)
+                    </Label>
+                    <div className="flex gap-2 mt-2">
+                      <div className="relative flex-1">
+                        <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9CA3AF]" />
+                        <Input
+                          id="coupon_code"
+                          value={couponCode}
+                          onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                          className="h-12 pl-11 uppercase"
+                          placeholder="SEKNU5OFF"
+                          data-testid="input-coupon-code"
+                        />
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={() => validateCoupon(couponCode)}
+                        disabled={isValidatingCoupon || !couponCode}
+                        variant="outline"
+                        className="h-12 px-6 border-[#3FA34D] text-[#3FA34D] hover:bg-[#F0FDF4]"
+                        data-testid="btn-validate-coupon"
+                      >
+                        {isValidatingCoupon ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Ověřit'}
+                      </Button>
+                    </div>
+                    {couponValid === true && (
+                      <p className="text-sm text-[#3FA34D] mt-2 flex items-center gap-1">
+                        <CheckCircle className="w-4 h-4" />
+                        Kupón platný! Sleva {couponDiscount}%
+                      </p>
+                    )}
+                    {couponValid === false && (
+                      <p className="text-sm text-red-500 mt-2 flex items-center gap-1">
+                        <XCircle className="w-4 h-4" />
+                        Neplatný nebo již použitý kupón
+                      </p>
+                    )}
+                  </div>
+
                   {/* GDPR Consent */}
                   <div className="pt-4 border-t border-gray-100">
                     <label className="flex items-start gap-3 cursor-pointer" data-testid="gdpr-consent">
@@ -644,12 +686,26 @@ const BookingPage = () => {
                         <div>
                           <p className="text-sm text-[#4B5563]">Služba: {getServiceName(formData.service)}</p>
                           <p className="text-sm text-[#4B5563]">Plocha: {formData.property_size} m²</p>
+                          {couponDiscount > 0 && (
+                            <p className="text-sm text-[#3FA34D] font-medium">Sleva: -{couponDiscount}%</p>
+                          )}
                         </div>
                         <div className="text-right">
                           <p className="text-sm text-[#4B5563]">Odhadovaná cena:</p>
-                          <p className="text-2xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                            ~{formData.estimated_price.toLocaleString('cs-CZ')} Kč
-                          </p>
+                          {couponDiscount > 0 ? (
+                            <>
+                              <p className="text-sm text-[#9CA3AF] line-through">
+                                {formData.estimated_price.toLocaleString('cs-CZ')} Kč
+                              </p>
+                              <p className="text-2xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                                ~{getFinalPrice().toLocaleString('cs-CZ')} Kč
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-2xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                              ~{formData.estimated_price.toLocaleString('cs-CZ')} Kč
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
