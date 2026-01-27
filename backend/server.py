@@ -504,17 +504,17 @@ async def subscribe_email(data: EmailSubscription):
     })
     logger.info(f"New subscriber: {data.email}, coupon: {coupon_code}")
     
-    # Add contact to Resend Audience for newsletter campaigns
-    if resend and RESEND_API_KEY and RESEND_AUDIENCE_ID:
+    # Add contact to Resend Contacts (no audience needed)
+    if resend and RESEND_API_KEY:
         try:
-            resend.Contacts.create(
-                email=data.email,
-                unsubscribed=False,
-                audience_id=RESEND_AUDIENCE_ID
-            )
-            logger.info(f"Contact added to Resend Audience: {data.email}")
+            contact_params = {
+                "email": data.email,
+                "unsubscribed": False
+            }
+            await asyncio.to_thread(resend.Contacts.create, contact_params)
+            logger.info(f"Contact added to Resend Contacts: {data.email}")
         except Exception as e:
-            logger.error(f"Failed to add contact to Resend Audience: {str(e)}")
+            logger.warning(f"Could not add contact to Resend (may already exist): {str(e)}")
     
     # Send coupon email
     if resend and RESEND_API_KEY:
