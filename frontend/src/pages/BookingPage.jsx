@@ -286,7 +286,7 @@ const BookingPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50" data-testid="booking-page">
       {/* Compact Header */}
-      <div className="bg-white border-b border-gray-200 py-4 px-4 sticky top-16 z-40">
+      <div className="bg-white border-b border-gray-200 py-4 px-4 mt-16">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-xl font-bold text-center text-gray-900 mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
             Rezervace online
