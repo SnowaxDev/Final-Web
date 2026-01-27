@@ -327,26 +327,37 @@ async def get_all_bookings():
 
 @api_router.post("/pricing/calculate")
 async def calculate_price(data: PriceCalculation):
-    base_price = SERVICE_PRICES.get(data.service, 15)
+    base_price = SERVICE_PRICES.get(data.service, 2)
+    
+    # Fixní ceny (nezávisí na m²)
+    fixed_price_services = ["vip_annual", "garden_work", "debris_hourly"]
     
     if data.service == "vip_annual":
         total = SERVICE_PRICES["vip_annual"]
-    elif data.service == "hedge_trimming":
-        total = base_price * data.property_size  # property_size = bm for hedges
+    elif data.service in ["garden_work", "debris_hourly"]:
+        # Hodinová sazba × počet hodin (property_size = hodiny)
+        total = int(base_price * max(data.property_size, 1))
     else:
+        # Cena za m²
         multiplier = CONDITION_MULTIPLIERS.get(data.condition, 1.0)
         total = int(base_price * data.property_size * multiplier)
     
-    # Add additional services
+    # Příplatky za m² (mulčování, solení)
     for service in data.additional_services:
-        total += ADDITIONAL_SERVICE_PRICES.get(service, 0)
+        if service in ADDITIONAL_SERVICE_PRICES_PER_M2:
+            total += int(ADDITIONAL_SERVICE_PRICES_PER_M2[service] * data.property_size)
+        elif service in ADDITIONAL_SERVICE_PRICES:
+            total += ADDITIONAL_SERVICE_PRICES[service]
     
     return {
         "estimated_price": total,
         "base_price_per_unit": base_price,
         "property_size": data.property_size,
         "condition_multiplier": CONDITION_MULTIPLIERS.get(data.condition, 1.0),
-        "additional_services_cost": sum(ADDITIONAL_SERVICE_PRICES.get(s, 0) for s in data.additional_services)
+        "additional_services_cost": sum(
+            ADDITIONAL_SERVICE_PRICES_PER_M2.get(s, 0) * data.property_size + ADDITIONAL_SERVICE_PRICES.get(s, 0) 
+            for s in data.additional_services
+        )
     }
 
 @api_router.get("/availability")
