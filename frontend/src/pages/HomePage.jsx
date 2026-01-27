@@ -165,7 +165,7 @@ const HomePage = () => {
                 
                 <div className="grid grid-cols-3 gap-6 py-6 border-t border-b border-gray-100">
                   <div className="text-center">
-                    <p className="text-2xl md:text-3xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>15 Kč</p>
+                    <p className="text-2xl md:text-3xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>2 Kč</p>
                     <p className="text-sm text-[#4B5563]">od / m²</p>
                   </div>
                   <div className="text-center border-x border-gray-100">
