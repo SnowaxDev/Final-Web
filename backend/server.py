@@ -339,7 +339,7 @@ async def create_booking(booking_data: BookingCreate):
                     "last_name": " ".join(booking.customer_name.split()[1:]) if len(booking.customer_name.split()) > 1 else "",
                     "unsubscribed": False
                 }
-                await asyncio.to_thread(resend.Contacts.create, **contact_params)
+                await asyncio.to_thread(resend.Contacts.create, contact_params)
                 logger.info(f"Contact added to Resend: {booking.customer_email}")
             except Exception as contact_error:
                 logger.warning(f"Could not add contact to Resend (may already exist): {str(contact_error)}")
