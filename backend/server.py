@@ -115,11 +115,22 @@ def generate_coupon_code():
 # ============== PRICING CONFIG ==============
 
 SERVICE_PRICES = {
-    "lawn_mowing": 15,          # Kč/m²
-    "lawn_with_fertilizer": 20, # Kč/m²
-    "overgrown": 25,            # Kč/m²
-    "hedge_trimming": 50,       # Kč/bm
-    "vip_annual": 6900,         # Kč/rok (fixed)
+    # Sekání trávy
+    "lawn_mowing": 2,              # Kč/m² - bez hnojení
+    "lawn_with_fertilizer": 3.33,  # Kč/m² - s hnojením
+    "overgrown": 3.5,              # Kč/m² - přerostlá tráva (3-4 Kč)
+    
+    # Sezónní balíčky (cena za m²)
+    "spring_package": 12,          # Jarní balíček - od 12 Kč/m²
+    "summer_package": 3,           # Letní balíček - od 3 Kč/m²
+    "autumn_package": 14,          # Podzimní balíček - od 14 Kč/m²
+    "winter_snow": 8,              # Zimní úklid sněhu - od 8 Kč/m²
+    
+    # Fixní ceny
+    "vip_annual": 6900,            # Celoroční VIP - od 6900 Kč/rok
+    "garden_work": 350,            # Zahradnické práce - 300-450 Kč/hod (průměr)
+    "debris_hourly": 400,          # Odvoz odpadu - 400 Kč/hod
+    
     "other": 0
 }
 
@@ -129,19 +140,30 @@ CONDITION_MULTIPLIERS = {
     "very_neglected": 2.0
 }
 
+# Příplatky za m²
+ADDITIONAL_SERVICE_PRICES_PER_M2 = {
+    "mulching": 0.5,               # Mulčování +0,5 Kč/m²
+    "salting": 0.5,                # Solení +0,5 Kč/m²
+}
+
+# Fixní příplatky
 ADDITIONAL_SERVICE_PRICES = {
-    "debris_removal": 500,
-    "mulching": 300,
-    "vertikutace": 800,
-    "hnojeni": 400
+    "debris_removal": 400,         # Odvoz odpadu - 400 Kč/hod
+    "vertikutace": 500,            # Vertikutace - cca 5 Kč/m² × 100m²
+    "hnojeni": 200,                # Hnojení extra
 }
 
 SERVICE_NAMES_CZ = {
-    "lawn_mowing": "Běžné sekání",
-    "lawn_with_fertilizer": "Sekání s hnojením",
-    "overgrown": "Přerostlá tráva",
-    "hedge_trimming": "Údržba živých plotů",
-    "vip_annual": "Celoroční VIP balíček",
+    "lawn_mowing": "Sekání trávy (bez hnojení)",
+    "lawn_with_fertilizer": "Sekání trávy (s hnojením)",
+    "overgrown": "Hrubé sekání (přerostlá tráva)",
+    "spring_package": "Jarní balíček - Restart trávníku",
+    "summer_package": "Letní balíček - Údržba a hustota",
+    "autumn_package": "Podzimní balíček - Příprava na zimu",
+    "winter_snow": "Zimní balíček - Úklid sněhu",
+    "vip_annual": "Celoroční VIP servis",
+    "garden_work": "Zahradnické práce (ruční)",
+    "debris_hourly": "Odvoz odpadu (hodinová sazba)",
     "other": "Jiná služba"
 }
 
