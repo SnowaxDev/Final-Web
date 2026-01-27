@@ -159,29 +159,29 @@ const HomePage = () => {
                     <h3 className="font-bold text-lg sm:text-xl text-[#111827]" style={{ fontFamily: 'Poppins, sans-serif' }}>
                       Pěkně udržovaný trávník
                     </h3>
-                    <p className="text-[#4B5563]">Profesionální sekání a péče</p>
+                    <p className="text-[#374151] font-medium">Profesionální sekání a péče</p>
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-6 py-6 border-t border-b border-gray-100">
+                <div className="grid grid-cols-3 gap-4 sm:gap-6 py-6 border-t-2 border-b-2 border-gray-100">
                   <div className="text-center">
-                    <p className="text-2xl md:text-3xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>2 Kč</p>
-                    <p className="text-sm text-[#4B5563]">od / m²</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-[#2E8B3E]" style={{ fontFamily: 'Poppins, sans-serif' }}>2 Kč</p>
+                    <p className="text-xs sm:text-sm font-semibold text-[#6B7280]">od / m²</p>
                   </div>
-                  <div className="text-center border-x border-gray-100">
-                    <p className="text-2xl md:text-3xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>30 km</p>
-                    <p className="text-sm text-[#4B5563]">Dosah služeb</p>
+                  <div className="text-center border-x-2 border-gray-100">
+                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-[#2E8B3E]" style={{ fontFamily: 'Poppins, sans-serif' }}>30 km</p>
+                    <p className="text-xs sm:text-sm font-semibold text-[#6B7280]">Dosah</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl md:text-3xl font-bold text-[#3FA34D]" style={{ fontFamily: 'Poppins, sans-serif' }}>Zdarma</p>
-                    <p className="text-sm text-[#4B5563]">Kalkulace</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-black text-[#2E8B3E]" style={{ fontFamily: 'Poppins, sans-serif' }}>Zdarma</p>
+                    <p className="text-xs sm:text-sm font-semibold text-[#6B7280]">Kalkulace</p>
                   </div>
                 </div>
 
                 <div className="mt-6">
                   <Link to="/rezervace">
                     <Button 
-                      className="w-full bg-[#3FA34D] hover:bg-[#2d7a38] text-white rounded-xl h-12 font-semibold"
+                      className="w-full bg-[#2E8B3E] hover:bg-[#256d31] text-white rounded-xl h-12 sm:h-14 font-bold text-base"
                       data-testid="hero-card-cta"
                     >
                       Získat cenovou nabídku zdarma
@@ -196,27 +196,27 @@ const HomePage = () => {
 
       {/* Services Section */}
       <section className="py-16 md:py-24 bg-white" data-testid="services-section">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#222222] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#111827] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Naše služby
             </h2>
-            <p className="text-[#4B5563] max-w-2xl mx-auto">
-              Kompletní zahradnické služby pro sekání trávníků po údržbu záhonů. 
-              Spoléhejte se na náš profesionální přístup a zkušené zahradníky.
+            <p className="text-[#374151] max-w-2xl mx-auto text-base sm:text-lg font-medium">
+              Kompletní zahradnické služby od sekání trávníků po údržbu záhonů. 
+              Profesionální přístup a férovost.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {services.map((service, idx) => (
               <Card 
                 key={idx} 
-                className="card-hover bg-white border border-gray-100 rounded-2xl overflow-hidden"
+                className="card-hover bg-white border-2 border-gray-100 rounded-2xl overflow-hidden hover:border-[#2E8B3E]/30"
                 data-testid={`service-card-${idx}`}
               >
-                <CardContent className="p-6 md:p-8">
-                  <div className="w-14 h-14 bg-[#F0FDF4] rounded-xl flex items-center justify-center mb-6">
-                    <service.icon className="w-7 h-7 text-[#3FA34D]" />
+                <CardContent className="p-5 sm:p-6 md:p-8">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#2E8B3E] rounded-xl flex items-center justify-center mb-5 shadow-md">
+                    <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-[#222222] mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     {service.title}
