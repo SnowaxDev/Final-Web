@@ -115,24 +115,55 @@ def generate_coupon_code():
 # ============== PRICING CONFIG ==============
 
 SERVICE_PRICES = {
-    # Sekání trávy
+    # Sekání trávy (základní služby)
     "lawn_mowing": 2,              # Kč/m² - bez hnojení
     "lawn_with_fertilizer": 3.33,  # Kč/m² - s hnojením
     "overgrown": 3.5,              # Kč/m² - přerostlá tráva (3-4 Kč)
     
-    # Sezónní balíčky (cena za m²)
-    "spring_package": 12,          # Jarní balíček - od 12 Kč/m²
-    "summer_package": 3,           # Letní balíček - od 3 Kč/m²
-    "autumn_package": 14,          # Podzimní balíček - od 14 Kč/m²
-    "winter_snow": 8,              # Zimní úklid sněhu - od 8 Kč/m²
-    
     # Fixní ceny
-    "vip_annual": 6900,            # Celoroční VIP - od 6900 Kč/rok
     "garden_work": 350,            # Zahradnické práce - 300-450 Kč/hod (průměr)
     "debris_hourly": 400,          # Odvoz odpadu - 400 Kč/hod
     
     "other": 0
 }
+
+# Odstupňované ceny balíčků podle velikosti plochy
+PACKAGE_TIERED_PRICING = {
+    "spring_package": {  # Jarní balíček
+        "small": 12,     # do 200 m²
+        "medium": 10,    # 200-500 m²
+        "large": 8.5,    # 500+ m²
+    },
+    "summer_package": {  # Letní balíček (měsíčně)
+        "small": 4,
+        "medium": 3.5,
+        "large": 3,
+    },
+    "autumn_package": {  # Podzimní balíček
+        "small": 14,
+        "medium": 12,
+        "large": 10,
+    },
+    "winter_snow": {     # Zimní balíček
+        "small": 10,
+        "medium": 8,
+        "large": 8,
+    },
+    "vip_annual": {      # Celoroční VIP (roční cena za m²)
+        "small": 22,
+        "medium": 20,
+        "large": 18,
+    },
+}
+
+def get_size_tier(size):
+    """Determine pricing tier based on property size"""
+    if size <= 200:
+        return "small"
+    elif size <= 500:
+        return "medium"
+    else:
+        return "large"
 
 CONDITION_MULTIPLIERS = {
     "normal": 1.0,
@@ -144,12 +175,13 @@ CONDITION_MULTIPLIERS = {
 ADDITIONAL_SERVICE_PRICES_PER_M2 = {
     "mulching": 0.5,               # Mulčování +0,5 Kč/m²
     "salting": 0.5,                # Solení +0,5 Kč/m²
+    "snow_clearing": 2,            # Dočištění sněhu 2 Kč/m²
 }
 
 # Fixní příplatky
 ADDITIONAL_SERVICE_PRICES = {
     "debris_removal": 400,         # Odvoz odpadu - 400 Kč/hod
-    "vertikutace": 500,            # Vertikutace - cca 5 Kč/m² × 100m²
+    "vertikutace": 500,            # Vertikutace extra
     "hnojeni": 200,                # Hnojení extra
 }
 
@@ -157,11 +189,11 @@ SERVICE_NAMES_CZ = {
     "lawn_mowing": "Sekání trávy (bez hnojení)",
     "lawn_with_fertilizer": "Sekání trávy (s hnojením)",
     "overgrown": "Hrubé sekání (přerostlá tráva)",
-    "spring_package": "Jarní balíček - Restart trávníku",
-    "summer_package": "Letní balíček - Údržba a hustota",
-    "autumn_package": "Podzimní balíček - Příprava na zimu",
-    "winter_snow": "Zimní balíček - Úklid sněhu",
-    "vip_annual": "Celoroční VIP servis",
+    "spring_package": "🌸 Jarní balíček – Restart trávníku",
+    "summer_package": "☀️ Letní balíček – Údržba a hustota",
+    "autumn_package": "🍂 Podzimní balíček – Příprava na zimu",
+    "winter_snow": "❄️ Zimní balíček – Úklid sněhu",
+    "vip_annual": "🌀 Celoroční VIP servis",
     "garden_work": "Zahradnické práce (ruční)",
     "debris_hourly": "Odvoz odpadu (hodinová sazba)",
     "other": "Jiná služba"
