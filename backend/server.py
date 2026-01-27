@@ -359,37 +359,50 @@ async def get_all_bookings():
 
 @api_router.post("/pricing/calculate")
 async def calculate_price(data: PriceCalculation):
-    base_price = SERVICE_PRICES.get(data.service, 2)
-    
-    # Fixní ceny (nezávisí na m²)
-    fixed_price_services = ["vip_annual", "garden_work", "debris_hourly"]
-    
-    if data.service == "vip_annual":
-        total = SERVICE_PRICES["vip_annual"]
+    # Check if it's a tiered package
+    if data.service in PACKAGE_TIERED_PRICING:
+        tier = get_size_tier(data.property_size)
+        base_price = PACKAGE_TIERED_PRICING[data.service][tier]
+        total = int(base_price * data.property_size)
     elif data.service in ["garden_work", "debris_hourly"]:
         # Hodinová sazba × počet hodin (property_size = hodiny)
+        base_price = SERVICE_PRICES.get(data.service, 350)
         total = int(base_price * max(data.property_size, 1))
-    else:
-        # Cena za m²
+    elif data.service in SERVICE_PRICES:
+        base_price = SERVICE_PRICES.get(data.service, 2)
         multiplier = CONDITION_MULTIPLIERS.get(data.condition, 1.0)
         total = int(base_price * data.property_size * multiplier)
+    else:
+        base_price = 2
+        total = int(base_price * data.property_size)
     
     # Příplatky za m² (mulčování, solení)
+    additional_cost = 0
     for service in data.additional_services:
         if service in ADDITIONAL_SERVICE_PRICES_PER_M2:
-            total += int(ADDITIONAL_SERVICE_PRICES_PER_M2[service] * data.property_size)
+            additional_cost += int(ADDITIONAL_SERVICE_PRICES_PER_M2[service] * data.property_size)
         elif service in ADDITIONAL_SERVICE_PRICES:
-            total += ADDITIONAL_SERVICE_PRICES[service]
+            additional_cost += ADDITIONAL_SERVICE_PRICES[service]
+    
+    total += additional_cost
+    
+    # Get tier info for packages
+    tier_info = None
+    if data.service in PACKAGE_TIERED_PRICING:
+        tier = get_size_tier(data.property_size)
+        tier_info = {
+            "tier": tier,
+            "tier_label": "do 200 m²" if tier == "small" else ("200-500 m²" if tier == "medium" else "500+ m²"),
+            "price_per_m2": PACKAGE_TIERED_PRICING[data.service][tier]
+        }
     
     return {
         "estimated_price": total,
         "base_price_per_unit": base_price,
         "property_size": data.property_size,
         "condition_multiplier": CONDITION_MULTIPLIERS.get(data.condition, 1.0),
-        "additional_services_cost": sum(
-            ADDITIONAL_SERVICE_PRICES_PER_M2.get(s, 0) * data.property_size + ADDITIONAL_SERVICE_PRICES.get(s, 0) 
-            for s in data.additional_services
-        )
+        "additional_services_cost": additional_cost,
+        "tier_info": tier_info
     }
 
 @api_router.get("/availability")
