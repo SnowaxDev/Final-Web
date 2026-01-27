@@ -74,71 +74,71 @@ const HomePage = () => {
   return (
     <div className="min-h-screen" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden" data-testid="hero-section">
+      <section className="relative pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden" data-testid="hero-section">
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F0FDF4] via-white to-[#F9FAFB]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F0FDF4] via-white to-[#F8FAFC]" />
         <div 
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233FA34D' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232E8B3E' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         />
         
-        <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
             <div className="text-left">
-              <div className="inline-flex items-center gap-2 bg-white border border-[#3FA34D]/20 rounded-full px-4 py-2 mb-6 shadow-sm">
-                <Star className="w-4 h-4 text-[#3FA34D]" />
-                <span className="text-sm font-medium text-[#4B5563]">
-                  Mladý brigádnický tým s chutí do práce
+              <div className="inline-flex items-center gap-2 bg-white border-2 border-[#2E8B3E]/20 rounded-full px-4 py-2 mb-6 shadow-sm">
+                <Star className="w-4 h-4 text-[#2E8B3E]" fill="#2E8B3E" />
+                <span className="text-sm font-semibold text-[#374151]">
+                  Mladý tým s chutí do práce
                 </span>
               </div>
               
               <h1 
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#222222] leading-tight mb-6"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#111827] leading-[1.1] mb-6"
                 style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 Perfektní sekání{' '}
-                <span className="text-[#3FA34D]">vašeho trávníku</span>
+                <span className="text-[#2E8B3E]">vašeho trávníku</span>
               </h1>
               
-              <p className="text-lg md:text-xl text-[#4B5563] mb-8 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg md:text-xl text-[#374151] mb-8 leading-relaxed max-w-xl font-medium">
                 Sekání, stříhání, úklid – rychle a za férové ceny. 
                 Spoléhejte na mladý, energický tým z Dvora Králové nad Labem.
               </p>
 
               {/* Trust badges */}
-              <div className="flex flex-wrap gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-5 mb-8">
                 {[
                   { icon: CheckCircle, text: 'Rychlost a spolehlivost' },
                   { icon: Shield, text: 'Transparentní ceny' },
-                  { icon: MapPin, text: 'Místní firma, známe region' },
+                  { icon: MapPin, text: 'Místní firma' },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm text-[#4B5563]">
-                    <item.icon className="w-4 h-4 text-[#3FA34D]" />
+                  <div key={idx} className="flex items-center gap-2 text-sm font-semibold text-[#374151]">
+                    <item.icon className="w-5 h-5 text-[#2E8B3E]" />
                     <span>{item.text}</span>
                   </div>
                 ))}
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/rezervace">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link to="/rezervace" className="w-full sm:w-auto">
                   <Button 
                     size="lg" 
-                    className="bg-[#3FA34D] hover:bg-[#2d7a38] text-white rounded-full px-8 h-14 text-base font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+                    className="w-full bg-[#2E8B3E] hover:bg-[#256d31] text-white rounded-full px-8 h-14 text-base font-bold shadow-lg hover:shadow-xl transition-all"
                     data-testid="hero-cta-rezervace"
                   >
                     Rezervovat online
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
-                <a href="https://wa.me/420730588372" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/420730588372" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
                   <Button 
                     size="lg" 
                     variant="outline"
-                    className="border-2 border-[#2d7a38] text-[#2d7a38] hover:bg-[#F0FDF4] rounded-full px-8 h-14 text-base font-semibold w-full sm:w-auto"
+                    className="w-full border-2 border-[#2E8B3E] text-[#2E8B3E] hover:bg-[#F0FDF4] rounded-full px-8 h-14 text-base font-bold"
                     data-testid="hero-cta-whatsapp"
                   >
                     <MessageCircle className="w-5 h-5 mr-2" />
@@ -149,14 +149,14 @@ const HomePage = () => {
             </div>
 
             {/* Right - Stats Card */}
-            <div className="relative">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-10 border border-gray-100">
+            <div className="relative mt-8 lg:mt-0">
+              <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border-2 border-gray-100">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-[#F0FDF4] rounded-2xl flex items-center justify-center">
-                    <Leaf className="w-8 h-8 text-[#3FA34D]" />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#2E8B3E] rounded-2xl flex items-center justify-center shadow-lg">
+                    <Leaf className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl text-[#222222]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    <h3 className="font-bold text-lg sm:text-xl text-[#111827]" style={{ fontFamily: 'Poppins, sans-serif' }}>
                       Pěkně udržovaný trávník
                     </h3>
                     <p className="text-[#4B5563]">Profesionální sekání a péče</p>
