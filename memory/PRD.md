@@ -6,56 +6,145 @@ Create a modern, minimalist website for SeknuTo.cz - a local lawn care service f
 ## Architecture
 - **Frontend**: React + Tailwind CSS + shadcn/ui
 - **Backend**: FastAPI + MongoDB
-- **Email**: Resend (ready for configuration)
+- **Email**: Resend (configured and working)
 
 ## User Personas
 1. **Homeowner** - Needs regular lawn maintenance
 2. **Property Manager** - Manages multiple properties
 3. **First-time Customer** - Looking for one-time service
 
-## Core Requirements (Static)
+## Core Requirements
 - Multi-page website (Homepage, Services, Pricing, Booking, About, Contact)
-- 5-step booking wizard
-- Price calculator
+- 5-step booking wizard with dynamic price calculation
+- Newsletter popup with 5% coupon
 - WhatsApp integration (730 588 372)
 - Email notifications (Resend)
 - Czech language throughout
 
+---
+
 ## What's Been Implemented (January 2026)
-- ✅ Complete frontend with 6 pages
-- ✅ Header with navigation and mobile menu
-- ✅ Footer with contact info and links
-- ✅ Hero section with stats card
-- ✅ Services overview with 6 service types
-- ✅ Pricing page with calculator
-- ✅ 5-step booking wizard with date picker
-- ✅ Contact form with validation
-- ✅ WhatsApp floating button
-- ✅ FAQ accordion
-- ✅ Backend API: bookings CRUD, pricing calculator, contact form
-- ✅ MongoDB integration for data persistence
-- ✅ Email templates ready (Resend integration prepared)
+
+### Completed Features ✅
+- **All 6 pages functional** (Homepage, Services, Pricing, Booking, About, Contact)
+- **5-step booking wizard** with:
+  - Service/package selection (basic services + seasonal packages)
+  - Property details with dynamic price calculation
+  - Calendar date picker (excludes Sundays)
+  - Contact information with coupon validation
+  - Confirmation page
+- **Newsletter popup** - appears immediately, 5% coupon generation
+- **Email templates** - Customer confirmation + Admin notification
+- **Resend integration** - API key configured, emails working
+- **Google Analytics component** - ready (needs GA_ID)
+- **WhatsApp floating button**
+- **Responsive design** - mobile-friendly
+
+### Backend APIs ✅
+- `POST /api/bookings` - Create booking
+- `GET /api/bookings/{id}` - Get booking by ID
+- `GET /api/bookings` - List all bookings
+- `POST /api/pricing/calculate` - Dynamic price calculation
+- `GET /api/availability` - Available dates (next 30 days, no Sundays)
+- `POST /api/subscribe` - Newsletter subscription + coupon generation
+- `POST /api/coupons/validate` - Coupon validation
+- `POST /api/contact` - Contact form submission
+
+### Testing Status ✅
+- Backend: 26/26 tests passing (pytest)
+- Frontend: All features verified via Playwright
+- Last test report: `/app/test_reports/iteration_7.json`
+
+---
+
+## Configuration Needed (User Action Required)
+
+### Required for full functionality:
+| Variable | File | Purpose | Status |
+|----------|------|---------|--------|
+| `ADMIN_EMAIL` | backend/.env | Receive booking notifications | ⏳ Waiting |
+| `REACT_APP_GA_ID` | frontend/.env | Google Analytics tracking | ⏳ Waiting |
+| `RESEND_AUDIENCE_ID` | backend/.env | Newsletter contact management | ⏳ Optional |
+
+### Already Configured:
+| Variable | Status |
+|----------|--------|
+| `RESEND_API_KEY` | ✅ Working |
+| `SENDER_EMAIL` | ✅ onboarding@resend.dev |
+| `MONGO_URL` | ✅ Connected |
+
+---
 
 ## Prioritized Backlog
 
 ### P0 (Critical for launch)
-- ✅ All pages functional
-- ✅ Booking flow complete
-- ⏳ Configure Resend API key for email notifications
+- [x] All pages functional
+- [x] Booking flow complete
+- [x] Email notifications working
+- [ ] **Google Calendar Integration** - `addToCalendar` is placeholder, needs API credentials
 
 ### P1 (Important)
-- GDPR/Privacy policy page
-- Admin dashboard for managing bookings
-- SMS notifications via Twilio
+- [ ] Configure admin email for notifications
+- [ ] Configure Google Analytics ID
+- [ ] GDPR/Privacy policy page
+- [ ] Customer testimonials section
 
 ### P2 (Nice to have)
-- Customer reviews/testimonials
-- Photo gallery of completed work
-- Blog for gardening tips
-- Seasonal promotions
+- [ ] Admin dashboard for managing bookings
+- [ ] Photo gallery of completed work
+- [ ] Images on services page
+- [ ] Blog for gardening tips
+- [ ] Seasonal promotions
 
-## Next Tasks
-1. Add RESEND_API_KEY to backend/.env for email notifications
-2. Create privacy policy and terms pages
-3. Add admin dashboard for booking management
-4. Implement Google Analytics tracking
+### Future (V2)
+- [ ] Customer portal with booking history
+- [ ] Online payment integration
+- [ ] SMS notifications via Twilio
+
+---
+
+## Technical Notes
+
+### File Structure
+```
+/app/
+├── backend/
+│   ├── .env              # API keys, MongoDB URL
+│   ├── requirements.txt  # Python dependencies
+│   ├── server.py         # All API routes and logic
+│   └── tests/            # Pytest test files
+├── frontend/
+│   ├── .env              # REACT_APP_BACKEND_URL
+│   ├── src/
+│   │   ├── App.js        # Router + layout
+│   │   ├── components/   # Reusable components
+│   │   └── pages/        # Page components
+└── memory/
+    └── PRD.md            # This file
+```
+
+### Key Files
+- `/app/backend/server.py` - All backend logic (593 lines)
+- `/app/frontend/src/pages/BookingPage.jsx` - Booking form (1122 lines)
+- `/app/frontend/src/components/EmailPopup.jsx` - Newsletter popup
+- `/app/frontend/src/components/GoogleAnalytics.jsx` - GA tracking
+
+### Known Mocked/Placeholder Code
+- `addToCalendar()` in server.py - Google Calendar integration not implemented
+
+---
+
+## Changelog
+
+### 2026-01-27
+- Verified all features working (100% test pass rate)
+- Confirmed newsletter popup appears immediately
+- Confirmed Resend email integration working
+- Google Analytics component ready (needs GA_ID)
+
+### Previous Sessions
+- Full application built with React + FastAPI + MongoDB
+- 5-step booking form implemented
+- Newsletter popup with coupon system
+- Resend email templates created
+- Design improvements for contrast and mobile
