@@ -127,19 +127,23 @@ const BookingPage = () => {
   };
 
   const services = [
-    { id: 'lawn_mowing', icon: Scissors, title: 'Běžné sekání', price: '15 Kč/m²' },
-    { id: 'lawn_with_fertilizer', icon: Sprout, title: 'Sekání s hnojením', price: '20 Kč/m²' },
-    { id: 'overgrown', icon: Leaf, title: 'Přerostlá tráva', price: '25 Kč/m²' },
-    { id: 'hedge_trimming', icon: TreeDeciduous, title: 'Údržba živých plotů', price: '50 Kč/bm' },
-    { id: 'vip_annual', icon: Package, title: 'Celoroční VIP balíček', price: 'od 6.900 Kč/rok' },
+    { id: 'lawn_mowing', icon: Scissors, title: 'Sekání trávy (bez hnojení)', price: '2 Kč/m²' },
+    { id: 'lawn_with_fertilizer', icon: Sprout, title: 'Sekání trávy (s hnojením)', price: '3,33 Kč/m²' },
+    { id: 'overgrown', icon: Leaf, title: 'Hrubé sekání (přerostlá)', price: '3-4 Kč/m²' },
+    { id: 'spring_package', icon: Sprout, title: '🌸 Jarní balíček', price: 'od 12 Kč/m²' },
+    { id: 'summer_package', icon: Sprout, title: '☀️ Letní balíček', price: 'od 3 Kč/m²' },
+    { id: 'autumn_package', icon: Leaf, title: '🍂 Podzimní balíček', price: 'od 14 Kč/m²' },
+    { id: 'winter_snow', icon: Package, title: '❄️ Zimní úklid sněhu', price: 'od 8 Kč/m²' },
+    { id: 'vip_annual', icon: Package, title: 'Celoroční VIP servis', price: 'od 6 900 Kč/rok' },
+    { id: 'garden_work', icon: TreeDeciduous, title: 'Zahradnické práce', price: '300-450 Kč/hod' },
     { id: 'other', icon: HelpCircle, title: 'Jiné (specifikujte v poznámce)', price: 'Dle dohody' },
   ];
 
   const additionalServices = [
-    { id: 'debris_removal', label: 'Odvoz odpadu (+500 Kč)' },
-    { id: 'mulching', label: 'Mulčování (+300 Kč)' },
-    { id: 'vertikutace', label: 'Vertikutace (+800 Kč)' },
-    { id: 'hnojeni', label: 'Extra hnojení (+400 Kč)' },
+    { id: 'mulching', label: 'Mulčování (+0,5 Kč/m²)' },
+    { id: 'debris_removal', label: 'Odvoz odpadu (+400 Kč/hod)' },
+    { id: 'vertikutace', label: 'Vertikutace (+500 Kč)' },
+    { id: 'salting', label: 'Solení/posyp (+0,5 Kč/m²)' },
   ];
 
   const timeOptions = [
