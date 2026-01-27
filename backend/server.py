@@ -332,9 +332,8 @@ async def create_booking(booking_data: BookingCreate):
         except Exception as contact_error:
             logger.warning(f"Could not add contact to Resend (may already exist): {str(contact_error)}")
         
-        # Send emails
+        # Send customer confirmation email
         try:
-            # Customer email
             customer_params = {
                 "from": SENDER_EMAIL,
                 "to": [booking.customer_email],
@@ -343,9 +342,12 @@ async def create_booking(booking_data: BookingCreate):
             }
             await asyncio.to_thread(resend.Emails.send, customer_params)
             logger.info(f"Customer confirmation email sent to {booking.customer_email}")
-            
-            # Admin email
-            if ADMIN_EMAIL:
+        except Exception as e:
+            logger.error(f"Failed to send customer email: {str(e)}")
+        
+        # Send admin notification email (separate try block)
+        if ADMIN_EMAIL:
+            try:
                 admin_params = {
                     "from": SENDER_EMAIL,
                     "to": [ADMIN_EMAIL],
@@ -354,8 +356,8 @@ async def create_booking(booking_data: BookingCreate):
                 }
                 await asyncio.to_thread(resend.Emails.send, admin_params)
                 logger.info(f"Admin notification email sent to {ADMIN_EMAIL}")
-        except Exception as e:
-            logger.error(f"Failed to send email: {str(e)}")
+            except Exception as e:
+                logger.error(f"Failed to send admin email: {str(e)}")
     
     return booking
 
