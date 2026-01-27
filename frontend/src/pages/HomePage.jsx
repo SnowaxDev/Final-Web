@@ -218,28 +218,28 @@ const HomePage = () => {
                   <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#2E8B3E] rounded-xl flex items-center justify-center mb-5 shadow-md">
                     <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#222222] mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#111827] mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     {service.title}
                   </h3>
-                  <p className="text-[#4B5563] mb-4 text-sm leading-relaxed">
+                  <p className="text-[#374151] mb-4 text-sm leading-relaxed font-medium">
                     {service.description}
                   </p>
                   <ul className="space-y-2 mb-6">
                     {service.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-2 text-sm text-[#4B5563]">
-                        <CheckCircle className="w-4 h-4 text-[#3FA34D] flex-shrink-0" />
+                      <li key={fIdx} className="flex items-center gap-2 text-sm text-[#374151] font-medium">
+                        <CheckCircle className="w-4 h-4 text-[#2E8B3E] flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <span className="text-sm text-[#4B5563]">Cena:</span>
-                    <span className="text-lg font-bold text-[#3FA34D]">{service.price}</span>
+                  <div className="flex items-center justify-between pt-4 border-t-2 border-gray-100">
+                    <span className="text-sm font-semibold text-[#6B7280]">Cena:</span>
+                    <span className="text-lg font-black text-[#2E8B3E]">{service.price}</span>
                   </div>
                   <Link to="/rezervace" className="block mt-4">
                     <Button 
                       variant="outline" 
-                      className="w-full border-[#3FA34D] text-[#3FA34D] hover:bg-[#F0FDF4] rounded-lg"
+                      className="w-full border-2 border-[#2E8B3E] text-[#2E8B3E] hover:bg-[#F0FDF4] rounded-lg font-bold"
                     >
                       Více informací
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -253,7 +253,7 @@ const HomePage = () => {
           <div className="text-center mt-10">
             <Link to="/sluzby">
               <Button 
-                className="bg-[#3FA34D] hover:bg-[#2d7a38] text-white rounded-full px-8"
+                className="bg-[#2E8B3E] hover:bg-[#256d31] text-white rounded-full px-8 h-12 font-bold"
                 data-testid="view-all-services-btn"
               >
                 Zobrazit všechny služby
@@ -264,20 +264,20 @@ const HomePage = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 md:py-24 bg-[#F9FAFB]" data-testid="why-us-section">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <section className="py-16 md:py-24 bg-[#F8FAFC]" data-testid="why-us-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#222222] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
-              Proč si vybrat naše zahradnické služby?
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#111827] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              Proč si vybrat naše služby?
             </h2>
-            <p className="text-[#4B5563] max-w-2xl mx-auto">
-              Kombinujeme moderní technologie s tradičním řemeslnickým přístupem, 
-              což znamená skvělé efektivitu výsledků.
+            <p className="text-[#374151] max-w-2xl mx-auto text-base sm:text-lg font-medium">
+              Mladý tým s energií a profesionálním přístupem. 
+              Férové ceny bez skrytých poplatků.
             </p>
           </div>
 
           {/* How it works */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
             {steps.map((step, idx) => (
               <div key={idx} className="text-center" data-testid={`step-${idx}`}>
                 <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md border border-gray-100">
