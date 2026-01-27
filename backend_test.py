@@ -75,8 +75,8 @@ class SeknuToAPITester:
         )
 
     def test_pricing_calculator(self):
-        """Test pricing calculator with new prices"""
-        print("\n🧮 Testing Updated Pricing Structure...")
+        """Test pricing calculator with tiered pricing structure"""
+        print("\n🧮 Testing Tiered Pricing Structure...")
         
         # Test 1: Basic lawn mowing (2 Kč/m²)
         test_data = {
@@ -96,25 +96,111 @@ class SeknuToAPITester:
             print(f"❌ Price mismatch: expected 200, got {response.get('estimated_price')}")
             return False
         
-        # Test 2: Lawn with fertilizer (3.33 Kč/m²)
+        # Test 2: Spring package tiered pricing - 150m² = 1800 Kč (12 Kč × 150)
         test_data = {
-            "service": "lawn_with_fertilizer",
-            "property_size": 100,
+            "service": "spring_package",
+            "property_size": 150,
             "condition": "normal",
             "additional_services": []
         }
         success, response = self.run_test(
-            "Lawn with fertilizer 100m² = 333 Kč",
+            "Spring package 150m² = 1800 Kč (12 Kč × 150, small tier)",
             "POST",
             "pricing/calculate",
             200,
             data=test_data
         )
-        if success and response.get('estimated_price') != 333:
-            print(f"❌ Price mismatch: expected 333, got {response.get('estimated_price')}")
-            return False
+        if success:
+            expected_price = 1800
+            actual_price = response.get('estimated_price')
+            tier_info = response.get('tier_info')
+            if actual_price != expected_price:
+                print(f"❌ Price mismatch: expected {expected_price}, got {actual_price}")
+                return False
+            if tier_info and tier_info.get('tier') != 'small':
+                print(f"❌ Tier mismatch: expected 'small', got {tier_info.get('tier')}")
+                return False
+            print(f"✅ Tier info: {tier_info}")
         
-        # Test 3: Mulching addon (+0.5 Kč/m²)
+        # Test 3: Spring package tiered pricing - 300m² = 3000 Kč (10 Kč × 300)
+        test_data = {
+            "service": "spring_package",
+            "property_size": 300,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "Spring package 300m² = 3000 Kč (10 Kč × 300, medium tier)",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success:
+            expected_price = 3000
+            actual_price = response.get('estimated_price')
+            tier_info = response.get('tier_info')
+            if actual_price != expected_price:
+                print(f"❌ Price mismatch: expected {expected_price}, got {actual_price}")
+                return False
+            if tier_info and tier_info.get('tier') != 'medium':
+                print(f"❌ Tier mismatch: expected 'medium', got {tier_info.get('tier')}")
+                return False
+            print(f"✅ Tier info: {tier_info}")
+        
+        # Test 4: VIP annual tiered pricing - 100m² = 2200 Kč (22 Kč × 100)
+        test_data = {
+            "service": "vip_annual",
+            "property_size": 100,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "VIP annual 100m² = 2200 Kč (22 Kč × 100, small tier)",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success:
+            expected_price = 2200
+            actual_price = response.get('estimated_price')
+            tier_info = response.get('tier_info')
+            if actual_price != expected_price:
+                print(f"❌ Price mismatch: expected {expected_price}, got {actual_price}")
+                return False
+            if tier_info and tier_info.get('tier') != 'small':
+                print(f"❌ Tier mismatch: expected 'small', got {tier_info.get('tier')}")
+                return False
+            print(f"✅ Tier info: {tier_info}")
+        
+        # Test 5: Large tier pricing - Spring package 600m² = 5100 Kč (8.5 Kč × 600)
+        test_data = {
+            "service": "spring_package",
+            "property_size": 600,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "Spring package 600m² = 5100 Kč (8.5 Kč × 600, large tier)",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success:
+            expected_price = 5100
+            actual_price = response.get('estimated_price')
+            tier_info = response.get('tier_info')
+            if actual_price != expected_price:
+                print(f"❌ Price mismatch: expected {expected_price}, got {actual_price}")
+                return False
+            if tier_info and tier_info.get('tier') != 'large':
+                print(f"❌ Tier mismatch: expected 'large', got {tier_info.get('tier')}")
+                return False
+            print(f"✅ Tier info: {tier_info}")
+        
+        # Test 6: Mulching addon (+0.5 Kč/m²)
         test_data = {
             "service": "lawn_mowing",
             "property_size": 100,
@@ -130,42 +216,6 @@ class SeknuToAPITester:
         )
         if success and response.get('estimated_price') != 250:
             print(f"❌ Price mismatch: expected 250, got {response.get('estimated_price')}")
-            return False
-        
-        # Test 4: Spring package (12 Kč/m²)
-        test_data = {
-            "service": "spring_package",
-            "property_size": 100,
-            "condition": "normal",
-            "additional_services": []
-        }
-        success, response = self.run_test(
-            "Spring package 100m² = 1200 Kč",
-            "POST",
-            "pricing/calculate",
-            200,
-            data=test_data
-        )
-        if success and response.get('estimated_price') != 1200:
-            print(f"❌ Price mismatch: expected 1200, got {response.get('estimated_price')}")
-            return False
-        
-        # Test 5: VIP annual (6900 Kč fixed)
-        test_data = {
-            "service": "vip_annual",
-            "property_size": 100,
-            "condition": "normal",
-            "additional_services": []
-        }
-        success, response = self.run_test(
-            "VIP annual = 6900 Kč (fixed)",
-            "POST",
-            "pricing/calculate",
-            200,
-            data=test_data
-        )
-        if success and response.get('estimated_price') != 6900:
-            print(f"❌ Price mismatch: expected 6900, got {response.get('estimated_price')}")
             return False
         
         return True
