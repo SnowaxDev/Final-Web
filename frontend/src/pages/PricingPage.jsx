@@ -210,10 +210,13 @@ const PricingPage = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="lawn_mowing">Běžné sekání (15 Kč/m²)</SelectItem>
-                      <SelectItem value="lawn_with_fertilizer">Sekání s hnojením (20 Kč/m²)</SelectItem>
-                      <SelectItem value="overgrown">Přerostlá tráva (25 Kč/m²)</SelectItem>
-                      <SelectItem value="hedge_trimming">Stříhání plotů (50 Kč/bm)</SelectItem>
+                      <SelectItem value="lawn_mowing">Sekání bez hnojení (2 Kč/m²)</SelectItem>
+                      <SelectItem value="lawn_with_fertilizer">Sekání s hnojením (3,33 Kč/m²)</SelectItem>
+                      <SelectItem value="overgrown">Hrubé sekání - přerostlá (3,5 Kč/m²)</SelectItem>
+                      <SelectItem value="spring_package">Jarní balíček (12 Kč/m²)</SelectItem>
+                      <SelectItem value="summer_package">Letní balíček (3 Kč/m²)</SelectItem>
+                      <SelectItem value="autumn_package">Podzimní balíček (14 Kč/m²)</SelectItem>
+                      <SelectItem value="winter_snow">Zimní úklid sněhu (8 Kč/m²)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
