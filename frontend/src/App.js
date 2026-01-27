@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import EmailPopup from "./components/EmailPopup";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -20,6 +21,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <GoogleAnalytics />
         <Header />
         <main>
           <Routes>
