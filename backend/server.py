@@ -465,7 +465,8 @@ async def subscribe_email(data: EmailSubscription):
     if existing:
         return {
             "message": "Tento email je již přihlášen",
-            "coupon_code": existing.get("coupon_code", "SEKNU5OFF")
+            "coupon_code": existing.get("coupon_code", "SEKNU5OFF"),
+            "already_subscribed": True
         }
     
     # Generate unique coupon
@@ -489,6 +490,18 @@ async def subscribe_email(data: EmailSubscription):
         "created_at": datetime.now(timezone.utc).isoformat()
     })
     logger.info(f"New subscriber: {data.email}, coupon: {coupon_code}")
+    
+    # Add contact to Resend Audience for newsletter campaigns
+    if resend and RESEND_API_KEY and RESEND_AUDIENCE_ID:
+        try:
+            resend.Contacts.create(
+                email=data.email,
+                unsubscribed=False,
+                audience_id=RESEND_AUDIENCE_ID
+            )
+            logger.info(f"Contact added to Resend Audience: {data.email}")
+        except Exception as e:
+            logger.error(f"Failed to add contact to Resend Audience: {str(e)}")
     
     # Send coupon email
     if resend and RESEND_API_KEY:
