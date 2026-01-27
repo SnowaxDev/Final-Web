@@ -155,6 +155,71 @@ class SeknuToAPITester:
             data=test_contact
         )
 
+    def test_email_subscription(self):
+        """Test email subscription endpoint"""
+        test_email = {
+            "email": f"test+{datetime.now().strftime('%H%M%S')}@example.com"
+        }
+        success, response = self.run_test(
+            "Email Subscription",
+            "POST",
+            "subscribe",
+            200,
+            data=test_email
+        )
+        return success, response.get('coupon_code') if success else None
+
+    def test_coupon_validation_valid(self, coupon_code):
+        """Test coupon validation with valid code"""
+        if not coupon_code:
+            print("❌ Skipping coupon validation - no coupon code")
+            return False, {}
+        
+        test_data = {"code": coupon_code}
+        return self.run_test(
+            "Coupon Validation (Valid)",
+            "POST",
+            "coupons/validate",
+            200,
+            data=test_data
+        )
+
+    def test_coupon_validation_invalid(self):
+        """Test coupon validation with invalid code"""
+        test_data = {"code": "INVALID123"}
+        return self.run_test(
+            "Coupon Validation (Invalid)",
+            "POST",
+            "coupons/validate",
+            404,
+            data=test_data
+        )
+
+    def test_duplicate_email_subscription(self):
+        """Test duplicate email subscription"""
+        test_email = {
+            "email": "duplicate@example.com"
+        }
+        # First subscription
+        success1, response1 = self.run_test(
+            "First Email Subscription",
+            "POST",
+            "subscribe",
+            200,
+            data=test_email
+        )
+        
+        # Duplicate subscription
+        success2, response2 = self.run_test(
+            "Duplicate Email Subscription",
+            "POST",
+            "subscribe",
+            200,
+            data=test_email
+        )
+        
+        return success1 and success2
+
     def test_invalid_endpoints(self):
         """Test invalid endpoints return proper errors"""
         success, _ = self.run_test(
