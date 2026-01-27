@@ -251,6 +251,14 @@ class SeknuToAPITester:
         self.test_all_bookings()
         self.test_contact_form()
         
+        # Test new email subscription and coupon features
+        subscription_success, coupon_code = self.test_email_subscription()
+        if subscription_success and coupon_code:
+            self.test_coupon_validation_valid(coupon_code)
+        
+        self.test_coupon_validation_invalid()
+        self.test_duplicate_email_subscription()
+        
         # Test error handling
         self.test_invalid_endpoints()
 
