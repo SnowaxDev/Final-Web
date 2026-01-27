@@ -75,20 +75,100 @@ class SeknuToAPITester:
         )
 
     def test_pricing_calculator(self):
-        """Test pricing calculator"""
+        """Test pricing calculator with new prices"""
+        print("\n🧮 Testing Updated Pricing Structure...")
+        
+        # Test 1: Basic lawn mowing (2 Kč/m²)
         test_data = {
             "service": "lawn_mowing",
             "property_size": 100,
             "condition": "normal",
-            "additional_services": ["debris_removal"]
+            "additional_services": []
         }
-        return self.run_test(
-            "Pricing Calculator",
+        success, response = self.run_test(
+            "Basic lawn mowing 100m² = 200 Kč",
             "POST",
             "pricing/calculate",
             200,
             data=test_data
         )
+        if success and response.get('estimated_price') != 200:
+            print(f"❌ Price mismatch: expected 200, got {response.get('estimated_price')}")
+            return False
+        
+        # Test 2: Lawn with fertilizer (3.33 Kč/m²)
+        test_data = {
+            "service": "lawn_with_fertilizer",
+            "property_size": 100,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "Lawn with fertilizer 100m² = 333 Kč",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success and response.get('estimated_price') != 333:
+            print(f"❌ Price mismatch: expected 333, got {response.get('estimated_price')}")
+            return False
+        
+        # Test 3: Mulching addon (+0.5 Kč/m²)
+        test_data = {
+            "service": "lawn_mowing",
+            "property_size": 100,
+            "condition": "normal",
+            "additional_services": ["mulching"]
+        }
+        success, response = self.run_test(
+            "Lawn mowing + mulching 100m² = 250 Kč (200 + 50)",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success and response.get('estimated_price') != 250:
+            print(f"❌ Price mismatch: expected 250, got {response.get('estimated_price')}")
+            return False
+        
+        # Test 4: Spring package (12 Kč/m²)
+        test_data = {
+            "service": "spring_package",
+            "property_size": 100,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "Spring package 100m² = 1200 Kč",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success and response.get('estimated_price') != 1200:
+            print(f"❌ Price mismatch: expected 1200, got {response.get('estimated_price')}")
+            return False
+        
+        # Test 5: VIP annual (6900 Kč fixed)
+        test_data = {
+            "service": "vip_annual",
+            "property_size": 100,
+            "condition": "normal",
+            "additional_services": []
+        }
+        success, response = self.run_test(
+            "VIP annual = 6900 Kč (fixed)",
+            "POST",
+            "pricing/calculate",
+            200,
+            data=test_data
+        )
+        if success and response.get('estimated_price') != 6900:
+            print(f"❌ Price mismatch: expected 6900, got {response.get('estimated_price')}")
+            return False
+        
+        return True
 
     def test_booking_creation(self):
         """Test booking creation"""
