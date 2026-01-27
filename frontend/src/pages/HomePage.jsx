@@ -18,23 +18,23 @@ const HomePage = () => {
     {
       icon: Scissors,
       title: 'Sekání trávy',
-      description: 'Profesionální sekání trávníků a zahradních ploch. Pravidelná údržba nebo jednorázová služba.',
-      price: 'od 15 Kč/m²',
-      features: ['Sekání na správnou výšku', 'Pravidelný plán údržby', 'Ekologické stříhání'],
-    },
-    {
-      icon: TreeDeciduous,
-      title: 'Stříhání plotů & keřů',
-      description: 'Formování živých plotů a zahradních keřů pro dokonalý vzhled.',
-      price: 'od 50 Kč/bm',
-      features: ['Formování do tvaru', 'Údržba existujících plotů', 'Přesné dokončení'],
+      description: 'Profesionální sekání trávníků s možností hnojení. Pravidelná údržba nebo jednorázová služba.',
+      price: 'od 2 Kč/m²',
+      features: ['Sekání bez hnojení: 2 Kč/m²', 'Sekání s hnojením: 3,33 Kč/m²', 'Mulčování: +0,5 Kč/m²'],
     },
     {
       icon: Sprout,
-      title: 'Zahradnické práce',
-      description: 'Kompletní zahradnické služby včetně úklidu listí, údržby záhonů a sezónního úklidu.',
-      price: 'od 300 Kč',
-      features: ['Úklid listí a větví', 'Údržba záhonů', 'Sezónní vyčištění'],
+      title: 'Sezónní balíčky',
+      description: 'Kompletní péče o trávník podle ročního období - jarní restart, letní údržba, podzimní příprava.',
+      price: 'od 900 Kč',
+      features: ['Jarní balíček: od 12 Kč/m²', 'Letní balíček: od 3 Kč/m²', 'Podzimní balíček: od 14 Kč/m²'],
+    },
+    {
+      icon: Package,
+      title: 'Celoroční VIP servis',
+      description: 'Komplexní roční péče včetně vertikutace, hnojení, sekání a zimního úklidu sněhu.',
+      price: 'od 6 900 Kč/rok',
+      features: ['2× vertikutace + 4× hnojení', '10× sekání + mulčování', 'Zimní úklid sněhu'],
     },
   ];
 
