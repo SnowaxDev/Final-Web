@@ -20,6 +20,11 @@ const EmailPopup = () => {
     const popupShown = localStorage.getItem('seknuto_popup_shown');
     const popupDismissed = localStorage.getItem('seknuto_popup_dismissed');
     
+    // Don't show on booking page
+    if (window.location.pathname === '/rezervace') {
+      return;
+    }
+    
     if (!popupShown && !popupDismissed) {
       // Show popup after 5 seconds
       const timer = setTimeout(() => {
