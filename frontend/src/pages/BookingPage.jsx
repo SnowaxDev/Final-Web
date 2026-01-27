@@ -730,11 +730,17 @@ const BookingPage = () => {
                       <Calendar
                         mode="single"
                         selected={formData.preferred_date}
-                        onSelect={(date) => updateFormData('preferred_date', date)}
+                        onSelect={(date) => {
+                          if (date) {
+                            setFormData(prev => ({ ...prev, preferred_date: date }));
+                          }
+                        }}
                         disabled={(date) => {
                           const today = new Date();
                           today.setHours(0, 0, 0, 0);
-                          return date < today || date.getDay() === 0;
+                          const isSunday = date.getDay() === 0;
+                          const isPast = date < today;
+                          return isPast || isSunday;
                         }}
                         locale={cs}
                         className="rounded-xl border border-gray-200 bg-white shadow-sm"
