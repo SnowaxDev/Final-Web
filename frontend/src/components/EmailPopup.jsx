@@ -79,7 +79,7 @@ const EmailPopup = () => {
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          className="absolute top-4 right-4 p-2 bg-white/80 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors z-10 shadow-sm"
           aria-label="Zavřít"
           data-testid="popup-close-btn"
         >
