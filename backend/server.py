@@ -30,6 +30,7 @@ except ImportError:
 
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', '')
+RESEND_AUDIENCE_ID = os.environ.get('RESEND_AUDIENCE_ID', '')  # Pro newsletter kontakty
 
 # Create the main app
 app = FastAPI()
