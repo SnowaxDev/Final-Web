@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calculator, CheckCircle, ArrowRight, Info,
-  Scissors, Sprout, TreeDeciduous, Package
+  Scissors, Sprout, Snowflake, Package, Sun, Leaf, Truck
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -26,30 +26,30 @@ const PricingPage = () => {
     {
       id: 'basic',
       icon: Scissors,
-      title: 'Běžné sekání',
-      price: '15',
+      title: 'Sekání trávy',
+      price: '2',
       unit: 'Kč/m²',
-      description: 'Ideální pro pravidelnou údržbu',
+      description: 'Základní sekání bez hnojení',
       features: [
         'Sekání na optimální výšku',
-        'Čisté okraje',
-        'Bez skrytých poplatků',
+        'S hnojením: 3,33 Kč/m²',
+        'Mulčování: +0,5 Kč/m²',
       ],
       cta: 'Vybrat',
     },
     {
       id: 'premium',
       icon: Sprout,
-      title: 'S hnojením',
-      price: '20',
-      unit: 'Kč/m²',
+      title: 'Sezónní balíčky',
+      price: 'od 900',
+      unit: 'Kč',
       popular: true,
-      description: 'Kompletní péče o trávník',
+      description: 'Kompletní sezónní péče',
       features: [
-        'Sekání + hnojení',
-        'Kvalitnější trávník',
-        'Prevence chorob',
-        'Doporučeno pro léto',
+        'Jarní balíček: od 12 Kč/m²',
+        'Letní balíček: od 3 Kč/m²',
+        'Podzimní balíček: od 14 Kč/m²',
+        'Zimní úklid: od 8 Kč/m²',
       ],
       cta: 'Vybrat',
     },
@@ -57,34 +57,36 @@ const PricingPage = () => {
       id: 'vip',
       icon: Package,
       title: 'Celoroční VIP',
-      price: 'od 6.900',
+      price: 'od 6 900',
       unit: 'Kč/rok',
       description: 'Žádné starosti po celý rok',
       features: [
-        '10-15 návštěv ročně',
-        'Jarní + podzimní hnojení',
-        'Vertikutace zdarma',
-        'Prioritní termíny',
-        '15% sleva na další',
+        '2× vertikutace',
+        '4× sezónní hnojení',
+        '10× sekání + mulčování',
+        'Zimní úklid sněhu',
       ],
       cta: 'Zjistit více',
     },
   ];
 
   const additionalPricing = [
-    { service: 'Přerostlá tráva', price: 'od 25 Kč/m²' },
-    { service: 'Stříhání plotů', price: 'od 50 Kč/bm' },
-    { service: 'Vertikutace', price: 'od 8 Kč/m²' },
-    { service: 'Odvoz odpadu', price: '+ 500 Kč' },
-    { service: 'Mulčování', price: '+ 300 Kč' },
-    { service: 'Extra hnojení', price: '+ 400 Kč' },
+    { service: 'Hrubé sekání (přerostlá)', price: '3-4 Kč/m²' },
+    { service: 'Mulčování', price: '+0,5 Kč/m²' },
+    { service: 'Odvoz odpadu (váha)', price: 'od 5 Kč/kg' },
+    { service: 'Odvoz odpadu (čas)', price: '400 Kč/hod' },
+    { service: 'Zahradnické práce', price: '300-450 Kč/hod' },
+    { service: 'Ruční odklízení sněhu', price: 'od 25 Kč/bm' },
   ];
 
   const servicePrices = {
-    lawn_mowing: 15,
-    lawn_with_fertilizer: 20,
-    overgrown: 25,
-    hedge_trimming: 50,
+    lawn_mowing: 2,
+    lawn_with_fertilizer: 3.33,
+    overgrown: 3.5,
+    spring_package: 12,
+    summer_package: 3,
+    autumn_package: 14,
+    winter_snow: 8,
   };
 
   const conditionMultipliers = {
@@ -94,7 +96,7 @@ const PricingPage = () => {
   };
 
   const calculatePrice = () => {
-    const basePrice = servicePrices[service] || 15;
+    const basePrice = servicePrices[service] || 2;
     const multiplier = conditionMultipliers[condition] || 1;
     const total = Math.round(basePrice * size * multiplier);
     setCalculatedPrice(total);
