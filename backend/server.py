@@ -318,8 +318,21 @@ async def create_booking(booking_data: BookingCreate):
     await db.bookings.insert_one(doc)
     logger.info(f"New booking created: {booking.id} for {booking.customer_name}")
     
-    # Send emails and add to Resend Contacts
+    # Add booking email to Resend Contacts (independent of email sending)
     if resend and RESEND_API_KEY:
+        try:
+            contact_params = {
+                "email": booking.customer_email,
+                "first_name": booking.customer_name.split()[0] if booking.customer_name else "",
+                "last_name": " ".join(booking.customer_name.split()[1:]) if len(booking.customer_name.split()) > 1 else "",
+                "unsubscribed": False
+            }
+            await asyncio.to_thread(resend.Contacts.create, contact_params)
+            logger.info(f"Contact added to Resend: {booking.customer_email}")
+        except Exception as contact_error:
+            logger.warning(f"Could not add contact to Resend (may already exist): {str(contact_error)}")
+        
+        # Send emails
         try:
             # Customer email
             customer_params = {
@@ -330,19 +343,6 @@ async def create_booking(booking_data: BookingCreate):
             }
             await asyncio.to_thread(resend.Emails.send, customer_params)
             logger.info(f"Customer confirmation email sent to {booking.customer_email}")
-            
-            # Add booking email to Resend Contacts
-            try:
-                contact_params = {
-                    "email": booking.customer_email,
-                    "first_name": booking.customer_name.split()[0] if booking.customer_name else "",
-                    "last_name": " ".join(booking.customer_name.split()[1:]) if len(booking.customer_name.split()) > 1 else "",
-                    "unsubscribed": False
-                }
-                await asyncio.to_thread(resend.Contacts.create, contact_params)
-                logger.info(f"Contact added to Resend: {booking.customer_email}")
-            except Exception as contact_error:
-                logger.warning(f"Could not add contact to Resend (may already exist): {str(contact_error)}")
             
             # Admin email
             if ADMIN_EMAIL:
