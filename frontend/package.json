@@ -56,9 +56,10 @@
     "zod": "^3.24.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test"
+    "build": "craco build"  // ← používá craco
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0"  // ← musí být nainstalováno
   },
   "browserslist": {
     "production": [
