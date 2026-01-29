@@ -56,7 +56,10 @@
     "zod": "^3.24.4"
   },
   "scripts": {
-    "build": "craco build"  // ← používá craco
+    "start": "react-scripts start",
+    "build": "react-scripts build",  // ← změň z "craco build"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0"  // ← musí být nainstalováno
